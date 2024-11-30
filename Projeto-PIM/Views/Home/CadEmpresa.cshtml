@@ -1,0 +1,136 @@
+﻿@model Projeto_PIM.Models.CadEmpresa
+
+@{
+    ViewBag.Title = "CadEmpresa";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="https://kit.fontawesome.com/3487a22d87.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/CSS/CadCliente.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Exibir mensagens Toastr
+            if ('@TempData["ToastrMessage"]') {
+                toastr['@TempData["ToastrType"]']('@TempData["ToastrMessage"]');
+            }
+
+            // Máscaras de entrada
+            $('#CNPJ').mask('00.000.000/0000-00');
+            $('#Telefone').mask('(00) 00000-0000');
+            $('#CEP').mask('00000-000');
+        });
+    </script>
+
+    <title>Cadastro de Empresa</title>
+</head>
+<body>
+    <div class="form-container">
+        <div class="container">
+            <article>
+                <section>
+                    <h2>Cadastro de Empresa</h2>
+                    @using (Html.BeginForm("CadEmpresa", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <!-- Campo Razão Social -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RazaoSocial, "Razão Social")
+                            <i class="fa-solid fa-user"></i>
+                            @Html.TextBoxFor(model => model.RazaoSocial, new { @class = "form-control", placeholder = "Digite a razão social da empresa" })
+                            @Html.ValidationMessageFor(model => model.RazaoSocial, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo CNPJ -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CNPJ, "CNPJ")
+                            <i class="fa-solid fa-id-card"></i>
+                            @Html.TextBoxFor(model => model.CNPJ, new { @class = "form-control", id = "CNPJ", placeholder = "Digite o CNPJ" })
+                            @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Email -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, "Email")
+                            <i class="fa-solid fa-envelope"></i>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Digite o email da empresa" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Telefone -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Telefone, "Telefone")
+                            <i class="fa-solid fa-phone"></i>
+                            @Html.TextBoxFor(model => model.Telefone, new { @class = "form-control", id = "Telefone", placeholder = "(00) 00000-0000" })
+                            @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo CEP -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CEP1, "CEP")
+                            <i class="fa-solid fa-map-marker-alt"></i>
+                            @Html.TextBoxFor(model => model.CEP1, new { @class = "form-control", id = "CEP", placeholder = "00000-000" })
+                            @Html.ValidationMessageFor(model => model.CEP1, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Rua -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Rua1, "Rua")
+                            <i class="fa-solid fa-road"></i>
+                            @Html.TextBoxFor(model => model.Rua1, new { @class = "form-control", placeholder = "Digite o nome da rua" })
+                            @Html.ValidationMessageFor(model => model.Rua1, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Número -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Numero1, "Número")
+                            <i class="fa-solid fa-home"></i>
+                            @Html.TextBoxFor(model => model.Numero1, new { @class = "form-control", placeholder = "Número da residência" })
+                            @Html.ValidationMessageFor(model => model.Numero1, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Complemento -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Complemento1, "Complemento")
+                            <i class="fa-solid fa-building"></i>
+                            @Html.TextBoxFor(model => model.Complemento1, new { @class = "form-control", placeholder = "Digite o complemento (opcional)" })
+                            @Html.ValidationMessageFor(model => model.Complemento1, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Senha -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Senha, "Senha")
+                            <i class="fa-solid fa-lock"></i>
+                            @Html.PasswordFor(model => model.Senha, new { @class = "form-control", placeholder = "Digite sua senha" })
+                            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Botão Finalizar Cadastro -->
+                        <div>
+                            <input type="submit" value="Finalizar Cadastro" class="btn btn-success" />
+                        </div>
+                    }
+                    <!-- Link para Login -->
+                    <div>
+                        <a href="@Url.Action("LoginEmpresa", "Home")" class="btn btn-primary">Já tem conta? Faça Login</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

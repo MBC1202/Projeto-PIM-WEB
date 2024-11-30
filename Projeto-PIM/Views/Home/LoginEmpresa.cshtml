@@ -1,0 +1,106 @@
+﻿@model Projeto_PIM.Models.CadEmpresa
+@{
+    ViewBag.Title = "LoginEmpresa";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="https://kit.fontawesome.com/3487a22d87.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/CSS/Login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <script>
+        $(document).ready(function () {
+            // Exibir mensagens Toastr
+            var message = '@TempData["ToastrMessage"]';
+            var type = '@TempData["ToastrType"]';
+
+            if (message) {
+                if (type === "success") {
+                    toastr.success(message);
+                } else if (type === "error") {
+                    toastr.error(message);
+                }
+            }
+
+            // Aplicar máscara ao campo de CNPJ
+            $('#CNPJ').mask('00.000.000/0000-00');
+        });
+    </script>
+
+    <title>Login Empresa</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo"><img src="~/Content/IMAGE/LOGO-GRIMPI2.jpg" alt="Logo"></div>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <div class="container">
+            <article>
+                <section>
+                    <h2>Faça Login como Empresa</h2>
+                    @using (Html.BeginForm("LoginEmpresa", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <!-- Resumo de validação -->
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <!-- Campo CNPJ -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CNPJ, "CNPJ")
+                            <i class="fa-solid fa-building"></i>
+                            @Html.TextBoxFor(
+                                model => model.CNPJ,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    id = "CNPJ",
+                                    placeholder = "Digite seu CNPJ (00.000.000/0000-00)"
+                                }
+                            )
+                            @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Campo Senha -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Senha, "Senha")
+                            <i class="fa-solid fa-lock"></i>
+                            @Html.PasswordFor(
+                                model => model.Senha,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    placeholder = "Digite sua senha"
+                                }
+                            )
+                            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Botão de Login -->
+                        <div>
+                            <button type="submit" class="btn btn-success">Entrar</button>
+                        </div>
+                    }
+
+                    <!-- Botões de Navegação -->
+                    <div class="button-container">
+                        <a href="@Url.Action("CadEmpresa", "Home")" class="btn btn-primary">Cadastre-se</a>
+                        <a href="@Url.Action("Login", "Home")" class="btn btn-primary">Login Pessoa Física</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+</body>
+</html>

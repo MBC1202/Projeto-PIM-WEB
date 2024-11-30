@@ -1,0 +1,161 @@
+﻿@model Projeto_PIM.Models.CadCliente
+
+@{
+    ViewBag.Title = "CadCliente";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="https://kit.fontawesome.com/3487a22d87.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/CSS/CadCliente.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            @if (TempData["ToastrMessage"] != null)
+            {
+                <text>
+            toastr["@TempData["ToastrType"]"]("@TempData["ToastrMessage"]");
+                </text>
+            }
+        });
+    </script>
+
+    <title>Cadastro de Cliente</title>
+</head>
+<body>
+    <div class="form-container">
+        <div class="container">
+            <article>
+                <section>
+                    <h2>Cadastre-se agora!</h2>
+                    @using (Html.BeginForm("CadCliente", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <!-- Campo Nome -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NomeFull, "Nome")             <i class="fa-solid fa-user"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.NomeFull, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.NomeFull, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo Email -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, "Endereço de email") <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo Telefone -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Telefone, "Telefone") <i class="fa-solid fa-phone"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.Telefone, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo CPF -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CPF, "CPF") <i class="fa-solid fa-id-card"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.CPF, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo CEP -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CEP, "CEP") <i class="fa-solid fa-map-marker-alt"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.CEP, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo Rua -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Rua, "Rua") <i class="fa-solid fa-road"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.Rua, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Rua, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo Número -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Numero, "Número") <i class="fa-solid fa-home"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.Numero, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo Complemento -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Complemento, "Complemento") <i class="fa-solid fa-building"></i>
+                            <div>
+                                @Html.TextBoxFor(model => model.Complemento, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Campo Senha -->
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Senha, "Senha") <i class="fa-solid fa-lock"></i>
+                            <div>
+                                @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                            </div>
+                            <div>
+                                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Botão Finalizar Cadastro -->
+                        <div>
+                            <input type="submit" value="Finalizar Cadastro" class="btn btn-success" />
+                        </div>
+                    }
+
+                    <!-- Link para Login -->
+                    <div>
+                        <a href="@Url.Action("Login", "Home")" class="btn btn-primary">Já tem conta? Faça Login</a>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
